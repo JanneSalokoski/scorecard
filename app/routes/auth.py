@@ -1,6 +1,6 @@
 import sqlite3
 
-from flask import Blueprint, render_template, redirect, request, flash
+from flask import Blueprint, render_template, redirect, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.db import get_db
 
@@ -9,6 +9,9 @@ bp = Blueprint("auth", __name__)
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
+    if "user_id" in session:
+        return redirect("/")
+
     if request.method == "GET":
         return render_template("register.html")
 
@@ -45,6 +48,9 @@ def register():
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
+    if "user_id" in session:
+        return redirect("/")
+
     if request.method == "GET":
         return render_template("login.html")
 
@@ -76,6 +82,8 @@ def login():
         if error:
             flash(error)
             return render_template("login.html", username=username)
+
+        session["user_id"] = row["id"]
 
     except Exception as e:
         flash(f"Error: {e}")
