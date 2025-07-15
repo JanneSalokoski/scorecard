@@ -1,8 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 bp = Blueprint("index", __name__)
 
 
 @bp.route("/")
 def index():
-    return "Scorecard"
+    return render_template("index.html")
