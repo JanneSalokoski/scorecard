@@ -90,3 +90,9 @@ def login():
         return render_template("login.html", username=username)
 
     return redirect("/auth/login")
+
+
+@bp.route("/logout")
+def logout():
+    del session["user_id"]
+    return redirect("/")
