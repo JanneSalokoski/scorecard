@@ -1,37 +1,26 @@
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>Scorecard</title>
-</head>
+{% block title %}Home | Scorecard{% endblock %}
 
-<body>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul class="errors">
-        {% for msg in messages %}
-        <li>{{ msg }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    <h1>Scorecard</h1>
+{% block styles %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}"> -->
+{% endblock %}
 
+{% block content %}
     <h2>User: {{ user.username }}</h2>
     <form method="POST">
-        <label for="username">
-            <span class="label">Username</span>
+        <label for="username" class="form-field">
+            <span class="form-label">Username</span>
             <input name="username" type="text" placeholder="Keijo Käytättäjä" value="{{ user.username or '' }}" required />
         </label>
-        <label for="password-1">
-            <span class="label">Password</span>
+        <label for="password-1" class="form-field">
+            <span class="form-label">Password</span>
             <input name="password-1" type="password" />
         </label>
-        <label for="password-2">
-            <span class="label">Repeat password</span>
+        <label for="password-2" class="form-field">
+            <span class="form-label">Repeat password</span>
             <input name="password-2" type="password" />
         </label>
-        <input type="submit" value="Update user" />
+        <button type="submit">Update user</button>
     </form>
-</body>
-
-</html>
+{% endblock %}

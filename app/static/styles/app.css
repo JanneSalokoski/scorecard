@@ -1,0 +1,67 @@
+header,
+main,
+footer {
+    padding: var(--gap);
+}
+
+nav ul {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(2, auto) 1fr repeat(3, auto);
+    gap: var(--gap);
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+div.flash-messages {
+    ul {
+        display: grid;
+        gap: var(--gap-s);
+
+        list-style-type: none;
+    }
+
+    li {
+        padding: var(--gap);
+        background-color: var(--color-darkred);
+        color: var(--color-lightred);
+    }
+}
+
+form {
+    max-width: 20em;
+}
+
+label.form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    span.form-label {
+        font-size: 0.9rem;
+        color: var(--color-fg-2);
+        margin-bottom: 0.25rem;
+    }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="button"],
+input[type="submit"],
+textarea,
+select,
+button,
+submit {
+    padding: var(--gap-xs);
+    font-size: 1rem;
+
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    background-color: var(--color-bg-2);
+    color: var(--color-fg-2);
+}
