@@ -48,9 +48,9 @@ def create_card():
 
 @bp.route("/<string:slug>", methods=["GET", "POST"])
 def view_card(slug: str):
-    if request.method == "GET":
-        db = get_db()
+    db = get_db()
 
+    if request.method == "GET":
         card_query = """
         SELECT
             cards.id AS card_id,
@@ -96,4 +96,32 @@ def view_card(slug: str):
 
         return render_template("view_card.html", card=card, scores=scores)
 
-    return "Not supported!"
+    card_id_query = "SELECT id FROM cards WHERE cards.slug = ?"
+    card_id = db.execute(card_id_query, (slug,)).fetchone()["id"]
+
+    if not card_id:
+        flash("Error: card not found")
+        return redirect(url_for("index.index"))
+
+    player_name = request.form.get("player_name")
+    if not player_name:
+        flash("Error: no player given")
+        return redirect(url_for("cards.view_card", slug=slug))
+
+    points = request.form.get("points")
+    if not points:
+        flash("Error: no points given")
+        return redirect(url_for("cards.view_card", slug=slug))
+
+    score_insert_query = (
+        "INSERT INTO scores (card_id, player_name, points) VALUES (?, ?, ?)"
+    )
+
+    try:
+        db.execute(score_insert_query, (card_id, player_name, points))
+        db.commit()
+    except Exception as e:
+        flash(f"Error: {e}")
+        return redirect(url_for("index.index"))
+
+    return redirect(url_for("cards.view_card", slug=slug))
