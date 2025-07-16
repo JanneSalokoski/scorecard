@@ -1,20 +1,12 @@
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>Scorecard</title>
-</head>
+{% block title %}Home | Scorecard{% endblock %}
 
-<body>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul class="errors">
-        {% for msg in messages %}
-        <li>{{ msg }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    <h1>Scorecard</h1>
-</body>
+{% block styles %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}"> -->
+{% endblock %}
 
-</html>
+{% block content %}
+<h1>Scorecard</h1>
+<p>This is your dashboard.</p>
+{% endblock %}
