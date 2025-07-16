@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <title>Scorecard</title>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="errors">
+        {% for msg in messages %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <h1>Scorecard</h1>
+
+    <h2>Register</h2>
+    <form method="POST">
+        <label for="username">
+            <span class="label">Username</span>
+            <input name="username" type="text" placeholder="Keijo Käytättäjä" value="{{ username or '' }}" required />
+        </label>
+        <label for="password-1">
+            <span class="label">Password</span>
+            <input name="password-1" type="password" required />
+        </label>
+        <label for="password-2">
+            <span class="label">Repeat password</span>
+            <input name="password-2" type="password" required />
+        </label>
+        <input type="submit" value="Register" />
+    </form>
+</body>
+
+</html>

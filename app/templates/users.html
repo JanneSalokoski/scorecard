@@ -5,12 +5,21 @@
 </head>
 
 <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="errors">
+        {% for msg in messages %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
     <h1>Scorecard</h1>
 
     <h2>Users</h2>
     <ol>
         {% for user in users %}
-        <li>{{ user.username }}</li>
+        <li><a href="/users/{{ user.id }}">{{ user.username }}</a></li>
         {% endfor %}
     </ol>
 </body>
