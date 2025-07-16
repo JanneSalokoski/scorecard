@@ -12,23 +12,23 @@
     {% if scores %}
         <ol class=scores>
             {% for score in scores %}
-            <li>{{score.player}}: {{score.points}}</li>
+            <li>{{score.player_name}}: {{score.points}}</li>
             {% endfor %}
         </ol>
     {% endif %}
 
     <form method="POST">
-        <label for="player" class="form-field">
+        <label for="player_name" class="form-field">
             <span class="form-label">Player</span>
-            <input name="player" type="text" placeholder="Keijo" required />
+            <input name="player_name" type="text" placeholder="Keijo" required />
         </label>
         <label for="round" class="form-field">
             <span class="form-label">Round</span>
             <input name="round" type="number" min="1" max="1000" step="1" />
         </label>
-        <label for="score" class="form-field">
+        <label for="points" class="form-field">
             <span class="form-label">Score</span>
-            <input name="score" type="number" min="1" max="1000" step="1" />
+            <input name="points" type="number" min="1" max="1000" step="1" />
         </label>
         <button type="submit">Add score</button>
     </form>
