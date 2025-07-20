@@ -52,6 +52,7 @@ input[type="password"],
 input[type="email"],
 input[type="button"],
 input[type="submit"],
+input[type="number"],
 textarea,
 select,
 button,
@@ -64,4 +65,25 @@ submit {
 
     background-color: var(--color-bg-2);
     color: var(--color-fg-2);
+}
+
+table.scores {
+    border-collapse: collapse;
+
+    td,
+    th {
+        border: 1px solid var(--color-bg-2);
+        padding: var(--gap-s);
+
+        text-align: center;
+    }
+
+    th {
+        font-weight: bold;
+        background-color: var(--color-bg-2);
+    }
+
+    tr:nth-child(even) {
+        background-color: var(--color-alt-row);
+    }
 }

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Create Card | Scorecard{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<h2>Create Card</h2>
+<form method="POST">
+    <label for="card_name" class="form-field">
+        <span class="form-label">Card name</span>
+        <input name="card_name" type="text" placeholder="D&D session 14.7." value="{{ card_name or '' }}" required />
+    </label>
+    <input name="user_id" type="number" disabled hidden />
+    <button type="submit">Create Card</button>
+</form>
+{% endblock %}
