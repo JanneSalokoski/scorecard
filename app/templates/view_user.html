@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Scorecard{% endblock %}
+
+{% block styles %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+    <h2>User: {{ user.username }}</h2>
+    <form method="POST">
+        <label for="username" class="form-field">
+            <span class="form-label">Username</span>
+            <input name="username" type="text" placeholder="Keijo Käytättäjä" value="{{ user.username or '' }}" required />
+        </label>
+        <label for="password-1" class="form-field">
+            <span class="form-label">Password</span>
+            <input name="password-1" type="password" />
+        </label>
+        <label for="password-2" class="form-field">
+            <span class="form-label">Repeat password</span>
+            <input name="password-2" type="password" />
+        </label>
+        <button type="submit">Update user</button>
+    </form>
+{% endblock %}

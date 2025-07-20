@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Scorecard{% endblock %}
+
+{% block styles %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+<h1>Scorecard</h1>
+<a class="button-link" href="{{ url_for('cards.create_card')}}">Create a new scorecard</a>
+{% endblock %}

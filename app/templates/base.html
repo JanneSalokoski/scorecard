@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ session['theme'] if session.get('theme') else 'light' }}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{% block description %}A web app for tracking scorecards{% endblock %}" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>{% block title %}Scorecard{% endblock %}</title>
+
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/app.css') }}">
+
+    <!-- Page-specific styles -->
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+    <header role="banner">
+        <nav aria-label="Main navigation">
+            <ul class="nav">
+                <li><a href="{{ url_for('index.index') }}">Home</a></li>
+                <li><a href="{{ url_for('users.users') }}">Users</a></li>
+                <li class="spacer"></li>
+                <li>
+                    <form action="{{ url_for('theme.set_theme') }}" method="POST">
+                        <button type="submit" name="theme"
+                            value="{{ 'light' if session.get('theme') == 'dark' else 'dark' }}">
+                            {% if session.get('theme') == 'dark' %}
+                            Theme: light
+                            {% else %}
+                            Theme: dark
+                            {% endif %}
+                        </button>
+                    </form>
+                </li>
+                {% if session.get('user_id') %}
+                <li><a href="{{ url_for('users.view_me') }}">My Profile</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main role="main" tabindex="-1">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div role="alert" class="flash-messages">
+            <ul>
+                {% for msg in messages %}
+                <li>{{ msg }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; {{ current_year or 2025 }} Janne Salokoski</p>
+    </footer>
+</body>
+
+</html>

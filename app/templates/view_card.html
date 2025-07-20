@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Card {{ card.card_name }} | Scorecard{% endblock %}
+
+{% block styles %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+    <h2>{{ card.card_name }}</h2>
+
+    <table class="scores">
+  <thead>
+    <tr>
+      <th>Round</th>
+      {% for player in players %}
+        <th>{{ player }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for round_number, scores in scores.items() %}
+      <tr>
+        <td>{{ round_number }}</td>
+        {% for player in players %}
+          <td>{{ scores.get(player, "-") }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+    <form method="POST">
+        <label for="player_name" class="form-field">
+            <span class="form-label">Player</span>
+            <input name="player_name" type="text" placeholder="Keijo" required />
+        </label>
+        <label for="round_number" class="form-field">
+            <span class="form-label">Round</span>
+            <input name="round_number" type="number" min="1" max="1000" step="1" />
+        </label>
+        <label for="points" class="form-field">
+            <span class="form-label">Score</span>
+            <input name="points" type="number" min="1" max="1000" step="1" />
+        </label>
+        <button type="submit">Add score</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Scorecard{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+    <h2>Users</h2>
+    <ol>
+        {% for user in users %}
+        <li><a href="/users/{{ user.id }}">{{ user.username }}</a></li>
+        {% endfor %}
+    </ol>
+{% endblock %}

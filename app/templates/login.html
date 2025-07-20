@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Scorecard{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="POST">
+        <label for="username" class="form-field">
+            <span class="form-label">Username</span>
+            <input name="username" type="text" placeholder="Keijo Käytättäjä" value="{{ username or '' }}" required />
+        </label>
+        <label for="password" class="form-field">
+            <span class="form-label">Password</span>
+            <input name="password" type="password" required />
+        </label>
+        <input type="submit" value="Log in" />
+    </form>
+{% endblock %}
