@@ -60,6 +60,7 @@ def view_card(slug: str):
             scores.id AS score_id,
             scores.player_name AS player_name,
             scores.points AS points,
+            scores.round_number,
             scores.created_at AS score_created
         FROM
             cards
@@ -67,7 +68,9 @@ def view_card(slug: str):
             scores
         ON
             cards.id = scores.card_id
-        WHERE cards.slug = ?;
+        WHERE cards.slug = ?
+        ORDER BY scores.round_number, scores.player_name
+        ;
         """
 
         card_rows = db.execute(card_query, (slug,)).fetchall()
@@ -83,18 +86,24 @@ def view_card(slug: str):
             "created_at": card_rows[0]["card_created"],
         }
 
-        scores = [
-            {
-                "id": row["score_id"],
-                "player_name": row["player_name"],
-                "points": row["points"],
-                "created_at": row["score_created"],
-            }
-            for row in card_rows
-            if row["score_id"] is not None
-        ]
+        from collections import defaultdict
 
-        return render_template("view_card.html", card=card, scores=scores)
+        round_scores = defaultdict(dict)
+        player_names = set()
+
+        for row in card_rows:
+            if row["score_id"] is not None:
+                player = row["player_name"]
+                round_num = row["round_number"]
+                round_scores[round_num][player] = row["points"]
+                player_names.add(player)
+
+        player_names = sorted(player_names)
+        round_scores = dict(sorted(round_scores.items()))
+
+        return render_template(
+            "view_card.html", card=card, players=player_names, scores=round_scores
+        )
 
     card_id_query = "SELECT id FROM cards WHERE cards.slug = ?"
     card_id = db.execute(card_id_query, (slug,)).fetchone()["id"]
@@ -113,12 +122,15 @@ def view_card(slug: str):
         flash("Error: no points given")
         return redirect(url_for("cards.view_card", slug=slug))
 
-    score_insert_query = (
-        "INSERT INTO scores (card_id, player_name, points) VALUES (?, ?, ?)"
-    )
+    round_number = request.form.get("round_number")
+    if not round_number:
+        flash("Error: no round given")
+        return redirect(url_for("cards.view_card", slug=slug))
+
+    score_insert_query = "INSERT INTO scores (card_id, player_name, points, round_number) VALUES (?, ?, ?, ?)"
 
     try:
-        db.execute(score_insert_query, (card_id, player_name, points))
+        db.execute(score_insert_query, (card_id, player_name, points, round_number))
         db.commit()
     except Exception as e:
         flash(f"Error: {e}")
