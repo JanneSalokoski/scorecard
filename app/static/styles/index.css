@@ -14,6 +14,8 @@
 
     --color-border: #777;
 
+    --color-alt-row: #dcdcdc;
+
     --gap-xs: 0.25rem;
     --gap-s: 0.5rem;
     --gap: 1rem;
@@ -30,6 +32,8 @@
 
     --color-fg: #ffeeee;
     --color-fg-2: #ddeeeee;
+
+    --color-alt-row: #222233;
 
     --color-blue: lightblue;
     --color-purple: pink;
