@@ -22,6 +22,7 @@ CREATE TABLE scores (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     card_id INTEGER NOT NULL,
     player_name TEXT NOT NULL,
+    round_number INTEGER NOT NULL,
     points INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
